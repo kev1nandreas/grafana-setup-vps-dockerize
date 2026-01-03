@@ -30,7 +30,7 @@ mkdir -p "$MONITORING_DIR/prometheus"
 echo "🟢 Created monitoring directory at $MONITORING_DIR."
 
 # Move Prometheus configuration file
-if [ ! -f "$REPO_DIR/prometheus/prometheus.yml" ]; then
+if [ ! -f "$REPO_DIR/prometheus.yml" ]; then
   echo "❌ Error: prometheus.yml not found in cloned repo"
   exit 1
 fi
