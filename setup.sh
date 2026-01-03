@@ -29,6 +29,15 @@ echo "🟢 Docker service started."
 mkdir -p "$MONITORING_DIR/prometheus"
 echo "🟢 Created monitoring directory at $MONITORING_DIR."
 
+# Move Docker Compose To Monitoring Directory
+if [ ! -f "$REPO_DIR/docker-compose.yml" ]; then
+  echo "❌ Error: docker-compose.yml not found in cloned repo"
+  exit 1
+fi
+
+mv "$REPO_DIR/docker-compose.yml" \
+   "$MONITORING_DIR/docker-compose.yml"
+
 # Move Prometheus configuration file
 if [ ! -f "$REPO_DIR/prometheus.yml" ]; then
   echo "❌ Error: prometheus.yml not found in cloned repo"
@@ -41,5 +50,6 @@ mv "$REPO_DIR/prometheus.yml" \
 echo "🟢 Moved prometheus.yml to $MONITORING_DIR/prometheus/"
 
 # Run Docker Compose
-docker-compose -f "$REPO_DIR/docker-compose.yml" up -d
+cd "$MONITORING_DIR"
+docker-compose -f "$MONITORING_DIR/docker-compose.yml" up -d
 echo "🟢 Monitoring stack is set up and running in detached mode."
